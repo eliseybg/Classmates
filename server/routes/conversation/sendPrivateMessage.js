@@ -46,6 +46,7 @@ function sendPrivateMessage(app, database) {
                                     database.collection("messages").insertOne({
                                         _id: messageId,
                                         chatId: chatId,
+                                        fromUserName: fromUser.name + " " + fromUser.surname,
                                         fromUserId: fromUser._id,
                                         messageText: messageText,
                                         sendDate: Date.now()
@@ -82,6 +83,7 @@ function sendPrivateMessage(app, database) {
                                         database.collection("messages").insertOne({
                                             _id: messageId,
                                             chatId: chat._id,
+                                            fromUserName: fromUser.name + " " + fromUser.surname,
                                             fromUserId: fromUser._id,
                                             messageText: messageText,
                                             sendDate: Date.now()

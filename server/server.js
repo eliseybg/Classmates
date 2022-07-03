@@ -1,4 +1,6 @@
 const homeRoute = require("./routes/homeRoute")
+const uploadFileRoute = require("./routes/files/uploadFileRoute")
+const uploadProfileImage = require("./routes/files/uploadProfileImageRoute")
 const signupRoute = require("./routes/user/auth/signupRoute")
 const signinRoute = require("./routes/user/auth/signinRoute")
 const allUsersRoute = require("./routes/common/allUsersRoute")
@@ -6,6 +8,7 @@ const profileInfoRoute = require("./routes/common/profileInfoRoute")
 const getChatsInfo = require("./routes/conversation/getChatsInfo")
 const sendMessage = require("./routes/conversation/sendMessage")
 const removeMessage = require("./routes/conversation/removeMessage")
+const createGroupChat = require("./routes/conversation/createGroupChat")
 const getChatMessages = require("./routes/conversation/getChatMessages")
 const sendPrivateMessage = require("./routes/conversation/sendPrivateMessage")
 const getAllFriends = require("./routes/user/cooperation/getAllFriends")
@@ -28,6 +31,7 @@ const mongoClient = mongodb.MongoClient
 const http = require("http").createServer(app)
 
 app.use(formidable())
+app.use(express.static('public'));
 app.use("/public", express.static(__dirname + "/public"))
 app.set("view engine", "ejs")
 
@@ -39,11 +43,14 @@ http.listen(3000, function () {
 
         homeRoute(app)
         signupRoute(app, database)
+        uploadFileRoute(app, database)
         signinRoute(app, database)
         allUsersRoute(app, database)
         profileInfoRoute(app, database)
         getChatsInfo(app, database)
         sendMessage(app, database)
+        createGroupChat(app, database)
+        uploadProfileImage(app, database)
         removeMessage(app, database)
         getAllFriends(app, database)
         getAllSubscriptions(app, database)

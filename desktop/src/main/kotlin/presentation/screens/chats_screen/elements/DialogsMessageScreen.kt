@@ -28,9 +28,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.AwtWindow
 import domain.entities.data.ChatInfo
 import domain.entities.data.CurrentUser
 import domain.entities.data.MessageInfo
+import localization.Vocabulary
 import presentation.components.RoundedTextField
 import presentation.components.SearchTextField
 import presentation.components.WebImage
@@ -39,6 +41,10 @@ import presentation.screens.chats_screen.ChatsScreenViewModel
 import presentation.screens.chats_screen.FindMessageStatus
 import ui.theme.*
 import util.toTime
+import java.awt.FileDialog
+import java.awt.Frame
+import java.io.File
+import java.io.FilenameFilter
 
 @Composable
 fun DialogsMessageScreen(
@@ -149,7 +155,7 @@ fun DialogsMessageScreen(
                     onValueChanged = {
                         viewModel.setEvent(ChatsScreenContract.Event.OnSearchMessageTextAppear(it))
                     },
-                    hint = "Search message...",
+                    hint = Vocabulary.localization.searchMsg,
                     fontSize = 10.sp,
                     hintFontSize = 10.sp,
                     borderColor = Color.Transparent,
@@ -183,6 +189,7 @@ fun DialogsMessageScreen(
                         DialogsMessageItem(
                             message = message.messageText,
                             messageTime = message.sendDate.toTime(),
+                            fromUserName = message.fromUserName,
                             isMyMessage = message.fromUserId == CurrentUser.userId,
                             isFoundMessage = findMessageStatus.value.first == index,
                             isLastUserMessage = false,
@@ -197,7 +204,7 @@ fun DialogsMessageScreen(
                         .weight(1f)
                         .padding(end = SMALL_PADDING),
                     text = sendMessageText,
-                    hint = "Message..."
+                    hint = Vocabulary.localization.msg
                 )
                 Box(
                     modifier = Modifier
